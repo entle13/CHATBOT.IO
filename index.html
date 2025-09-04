@@ -1,270 +1,880 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ntombikayise Ncamiso | Portfolio</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background: #f9f9f9;
-      transition: background 0.3s, color 0.3s;
-    }
-    a { text-decoration: none; }
-
-    header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 2rem; background: #222; color: #fff;
-      position: sticky; top: 0; z-index: 1000;
-    }
-    header nav a { color: #fff; margin-left: 1rem; transition: color 0.3s; }
-    header nav a:hover { color: #00b4d8; }
-
-    #hero {
-      text-align: center; padding: 4rem 2rem;
-      background: linear-gradient(135deg,#0077b6,#00b4d8);
-      color: white;
-    }
-    #hero h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    .btn {
-      display: inline-block; padding: 0.7rem 1.2rem;
-      background: #222; color: #fff;
-      margin: 0.5rem; border-radius: 4px; transition: background 0.3s;
-    }
-    .btn:hover { background: #00b4d8; }
-
-    section {
-      padding: 3rem 2rem; max-width: 1000px; margin: auto;
-      opacity: 0; transform: translateY(30px); transition: all 0.8s ease;
-    }
-    section.visible { opacity: 1; transform: translateY(0); }
-    section h2 { margin-bottom: 1rem; font-size: 2rem; color: #0077b6; }
-
-    #projects .grid {
-      display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-      gap: 1.5rem;
-    }
-    .card {
-      background: white; border-radius: 8px; overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer; display: flex; flex-direction: column;
-    }
-    .card img { width: 100%; height: 150px; object-fit: cover; }
-    .card div { padding: 1rem; }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 12px rgba(0,0,0,0.2);
-    }
-
-    .modal {
-      display: none; position: fixed; z-index: 2000;
-      left: 0; top: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8); justify-content: center; align-items: center;
-    }
-    .modal-content {
-      background: #fff; padding: 2rem; border-radius: 8px;
-      max-width: 700px; width: 90%; position: relative;
-      animation: fadeIn 0.3s ease; text-align: center;
-    }
-    .modal-content img {
-      max-width: 100%; border-radius: 6px; margin-bottom: 1rem;
-    }
-    .close {
-      position: absolute; top: 10px; right: 15px;
-      font-size: 1.5rem; cursor: pointer; color: #333;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(-20px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    form input, form textarea {
-      width: 100%; padding: 0.8rem; margin-bottom: 1rem;
-      border: 1px solid #ccc; border-radius: 4px;
-    }
-    form button { cursor: pointer; }
-    .socials a { margin-right: 1rem; color: #0077b6; }
-
-    footer {
-      text-align: center; padding: 1rem; background: #222; color: white;
-      margin-top: 2rem;
-    }
-
-    body.dark { background: #121212; color: #ddd; }
-    body.dark header { background: #000; }
-    body.dark #hero { background: linear-gradient(135deg,#333,#111); }
-    body.dark .card { background: #1e1e1e; color: #ddd; }
-    body.dark .modal-content { background: #1e1e1e; color: #ddd; }
-    body.dark .btn { background: #0077b6; }
-    body.dark footer { background: #000; }
-
-    .toggle-btn {
-      background: #00b4d8; border: none; padding: 0.5rem 1rem;
-      color: #fff; border-radius: 4px; cursor: pointer; margin-left: 1rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ntombikayise Ncamiso | Digital Professional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7e22ce;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f3f4f6;
+            --gray: #9ca3af;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--darker);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-accent {
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            background: linear-gradient(to bottom right, var(--darker), var(--dark));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .hero-text {
+            flex: 1;
+            padding-right: 40px;
+        }
+        
+        .hero-graphic {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--gray);
+            max-width: 600px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px -10px var(--primary);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+        }
+        
+        .graphic-element {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .graphic-element::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: pulse 3s linear infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: var(--dark);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            display: inline-block;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background-color: var(--primary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+        
+        .skills {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .skill-category {
+            background-color: rgba(31, 41, 55, 0.8);
+            padding: 25px;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .skill-category h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .skill-category ul {
+            list-style: none;
+        }
+        
+        .skill-category li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .skill-category li::before {
+            content: '▹';
+            color: var(--primary);
+            margin-right: 10px;
+        }
+        
+        /* Portfolio Section */
+        .portfolio {
+            padding: 100px 0;
+            background-color: var(--darker);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background-color: var(--dark);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .project-img {
+            height: 200px;
+            background: linear-gradient(45deg, #6366f1, #10b981);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .project-info {
+            padding: 20px;
+        }
+        
+        .project-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .project-info p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .project-tag {
+            background-color: rgba(99, 102, 241, 0.2);
+            color: var(--primary-light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .project-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .project-link i {
+            margin-right: 5px;
+        }
+        
+        .project-link:hover {
+            color: var(--primary-light);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--dark);
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info p {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .contact-details {
+            list-style: none;
+        }
+        
+        .contact-details li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-details i {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(99, 102, 241, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-right: 15px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background-color: var(--darker);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .contact-form {
+            flex: 1;
+            background-color: rgba(31, 41, 55, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: var(--light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 50px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .skills {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .graphic-element {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Ntombikayise Ncamiso</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-      <button class="toggle-btn">🌙 Dark</button>
-    </nav>
-  </header>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">N<span class="logo-accent">N</span></a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
 
-  <section id="hero" class="visible">
-    <h2>Digital Professional</h2>
-    <p>UX/UI · Front-End · Marketing · Data Analytics</p>
-    <a href="#projects" class="btn">View My Work</a>
-    <a href="cv.pdf" class="btn" download>Download CV</a>
-  </section>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Hi, I'm <span>Ntombikayise Ncamiso</span></h1>
+                    <p>A digital professional specializing in UX/UI design, front-end development, digital marketing, and data analytics. I create innovative digital experiences that drive results.</p>
+                    <div class="hero-buttons">
+                        <a href="#portfolio" class="btn">View My Work</a>
+                        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+                    </div>
+                </div>
+                <div class="hero-graphic">
+                    <div class="graphic-element"></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>
-      I am a digital professional with advanced skills in UX/UI design, front-end development,
-      digital marketing, and data analytics. Currently a candidate at Capacity (July 2025–Present),
-      and former Data Quality Officer at Anova Health Institute (2020–2024), where I honed my
-      expertise in data analytics.
-    </p>
-  </section>
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Digital Professional with Versatile Expertise</h3>
+                    <p>With experience in the digital space, I bring a unique combination of technical expertise and creative vision to every project. My background spans multiple disciplines, allowing me to approach problems from different perspectives and deliver comprehensive solutions.</p>
+                    <p>I'm passionate about creating user-centered designs, writing clean and efficient code, developing data-driven marketing strategies, and transforming complex data into actionable insights.</p>
+                    <p>My approach combines analytical thinking with creative problem-solving to deliver digital experiences that are not only visually appealing but also highly functional and effective.</p>
+                </div>
+                <div class="skills">
+                    <div class="skill-category">
+                        <h4>UX/UI Design</h4>
+                        <ul>
+                            <li>User Research</li>
+                            <li>Wireframing & Prototyping</li>
+                            <li>Interaction Design</li>
+                            <li>Design Systems</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Front-end Development</h4>
+                        <ul>
+                            <li>HTML/CSS/JavaScript</li>
+                            <li>React & Vue.js</li>
+                            <li>Responsive Design</li>
+                            <li>Performance Optimization</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Digital Marketing</h4>
+                        <ul>
+                            <li>SEO/SEM</li>
+                            <li>Content Strategy</li>
+                            <li>Social Media Marketing</li>
+                            <li>Conversion Optimization</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Data Analytics</h4>
+                        <ul>
+                            <li>Google Analytics</li>
+                            <li>Data Visualization</li>
+                            <li>A/B Testing</li>
+                            <li>Statistical Analysis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="grid">
-      <div class="card" data-project="chatbot">
-        <img src="https://via.placeholder.com/400x200?text=Chatbot" alt="Chatbot">
-        <div><h3>AI-Powered Chatbot</h3><p>Conversational AI tool for customer engagement.</p></div>
-      </div>
-      <div class="card" data-project="design">
-        <img src="https://via.placeholder.com/400x200?text=Design+System" alt="Design System">
-        <div><h3>Prototype Design System</h3><p>Reusable UI components for streamlined design.</p></div>
-      </div>
-      <div class="card" data-project="generator">
-        <img src="https://via.placeholder.com/400x200?text=Content+Generator" alt="Content Generator">
-        <div><h3>Custom Content Generator</h3><p>Automates tailored digital content creation.</p></div>
-      </div>
-      <div class="card" data-project="bias">
-        <img src="https://via.placeholder.com/400x200?text=Bias+Audit" alt="Bias Audit">
-        <div><h3>Bias Audit Report System</h3><p>Analyzes and reports potential algorithmic bias.</p></div>
-      </div>
-      <div class="card" data-project="dashboard">
-        <img src="https://via.placeholder.com/400x200?text=Dashboard" alt="Dashboard">
-        <div><h3>Marketing Attribution Dashboard</h3><p>Interactive data dashboard for campaign tracking.</p></div>
-      </div>
-      <div class="card" data-project="ecommerce">
-        <img src="https://via.placeholder.com/400x200?text=E-commerce" alt="E-commerce">
-        <div><h3>E-commerce Frontend</h3><p>Responsive web app with optimized UX flows.</p></div>
-      </div>
-    </div>
-  </section>
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Portfolio</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>AI-Powered Chatbot</h3>
+                        <p>An intelligent chatbot solution using natural language processing to provide customer support and answer queries in real-time.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">AI</span>
+                            <span class="project-tag">NLP</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            <a href="#" class="project-link"><i class="fas fa-code"></i> Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>Prototype Design System</h3>
+                        <p>A comprehensive design system and interactive prototypes for a fintech application, focusing on user experience and accessibility.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">UX/UI</span>
+                            <span class="project-tag">Figma</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-feather-alt"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>Custom Content Generator</h3>
+                        <p>An AI-driven content generation tool that creates personalized marketing copy, social media posts, and product descriptions.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">AI</span>
+                            <span class="project-tag">Marketing</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>Bias Audit Report System</h3>
+                        <p>A comprehensive analytical tool that audits algorithms for bias and generates detailed reports with mitigation recommendations.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Data Analytics</span>
+                            <span class="project-tag">AI Ethics</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>E-commerce Platform</h3>
+                        <p>Complete e-commerce solution with intuitive user interface, secure payment processing, and inventory management.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Front-end</span>
+                            <span class="project-tag">UX/UI</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>Marketing Analytics Dashboard</h3>
+                        <p>Interactive dashboard for tracking and visualizing marketing campaign performance across multiple channels.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Data Visualization</span>
+                            <span class="project-tag">Analytics</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <form action="#" method="POST">
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit" class="btn">Send</button>
-    </form>
-    <div class="socials">
-      <a href="#">LinkedIn</a>
-      <a href="#">GitHub</a>
-      <a href="#">Twitter</a>
-    </div>
-  </section>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Let's Talk About Your Project</h3>
+                    <p>I'm currently available for freelance work and open to new opportunities. Feel free to reach out if you have a project in mind or just want to connect.</p>
+                    <ul class="contact-details">
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>entlencamiso14@gmail.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>074 347 9569</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>38739 Khuthaza Street</span>
+                        </li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" placeholder="Your message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <footer>
-    <p>© 2025 Ntombikayise Ncamiso. All rights reserved.</p>
-  </footer>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Ntombikayise Ncamiso. All rights reserved.</p>
+        </div>
+    </footer>
 
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <img id="modal-img" src="" alt="">
-      <h3 id="modal-title"></h3>
-      <p id="modal-desc"></p>
-    </div>
-  </div>
+    <script>
+        // Simple form submission handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thanks for your message! I\'ll get back to you soon.');
+            this.reset();
+        });
 
-  <script>
-    const sections = document.querySelectorAll("section");
-    const revealOnScroll = () => {
-      const triggerBottom = window.innerHeight * 0.85;
-      sections.forEach(sec => {
-        const boxTop = sec.getBoundingClientRect().top;
-        if (boxTop < triggerBottom) sec.classList.add("visible");
-      });
-    };
-    window.addEventListener("scroll", revealOnScroll);
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
 
-    const toggleBtn = document.querySelector(".toggle-btn");
-    toggleBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-      toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️ Light" : "🌙 Dark";
-    });
-
-    const modal = document.getElementById("modal");
-    const modalTitle = document.getElementById("modal-title");
-    const modalDesc = document.getElementById("modal-desc");
-    const modalImg = document.getElementById("modal-img");
-    const closeBtn = document.querySelector(".close");
-
-    const projectData = {
-      chatbot: {
-        title: "AI-Powered Chatbot",
-        desc: "An intelligent chatbot built with AI/NLP to automate customer support and engagement.",
-        img: "https://via.placeholder.com/600x300?text=Chatbot+Preview"
-      },
-      design: {
-        title: "Prototype Design System",
-        desc: "A scalable design system with reusable components and color guidelines.",
-        img: "https://via.placeholder.com/600x300?text=Design+System+Preview"
-      },
-      generator: {
-        title: "Custom Content Generator",
-        desc: "Tool for auto-generating tailored blog posts, captions, and marketing copy.",
-        img: "https://via.placeholder.com/600x300?text=Content+Generator+Preview"
-      },
-      bias: {
-        title: "Bias Audit Report System",
-        desc: "Analytics platform that scans ML outputs for potential bias, generating compliance reports.",
-        img: "https://via.placeholder.com/600x300?text=Bias+Audit+Preview"
-      },
-      dashboard: {
-        title: "Marketing Attribution Dashboard",
-        desc: "Data visualization tool tracking campaign performance across channels.",
-        img: "https://via.placeholder.com/600x300?text=Dashboard+Preview"
-      },
-      ecommerce: {
-        title: "E-commerce Frontend",
-        desc: "Modern, responsive e-commerce interface with smooth UX and checkout flows.",
-        img: "https://via.placeholder.com/600x300?text=E-commerce+Preview"
-      }
-    };
-
-    document.querySelectorAll(".card").forEach(card => {
-      card.addEventListener("click", () => {
-        const project = card.dataset.project;
-        modalTitle.textContent = projectData[project].title;
-        modalDesc.textContent = projectData[project].desc;
-        modalImg.src = projectData[project].img;
-        modal.style.display = "flex";
-      });
-    });
-
-    closeBtn.onclick = () => { modal.style.display = "none"; };
-    window.onclick = e => { if (e.target == modal) modal.style.display = "none"; };
-  </script>
+        // Sticky header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.padding = '15px 0';
+                header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.padding = '20px 0';
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
+ 
 
       
-
+     
