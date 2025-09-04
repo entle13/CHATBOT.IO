@@ -1,515 +1,335 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Linkedin, Github, Twitter, Mail, Phone, ExternalLink, ArrowRight, Download, CheckCircle2, Menu, X, Sun, Moon, Sparkles, MapPin, Calendar, Award } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ntombikayise Ncamiso — Portfolio</title>
+  <meta name="description" content="Portfolio — Ntombikayise Ncamiso — UX/UI, Front-end, Digital Marketing, Data Analytics" />
+  <meta name="author" content="Ntombikayise Ncamiso" />
+  <style>
+    /* Reset + base */
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#06b6d4;
+      --text:#e6eef8; --glass: rgba(255,255,255,0.04);
+    }
+    [data-theme="light"]{
+      --bg:#f8fafc; --card:#ffffff; --muted:#64748b; --accent:#6d28d9; --accent-2:#0891b2; --text:#0b1220; --glass: rgba(11,18,32,0.04);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue";
+      background:linear-gradient(180deg,var(--bg), #071123 120%); color:var(--text); -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale; line-height:1.5;
+      -webkit-tap-highlight-color:transparent;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1100px; padding:28px; margin:0 auto}
+    header{backdrop-filter: blur(6px); position:sticky; top:0; z-index:40; border-bottom:1px solid rgba(255,255,255,0.04); background:linear-gradient(180deg, rgba(0,0,0,0.12), transparent)}
+    .nav {display:flex; gap:18px; align-items:center; justify-content:space-between; padding:12px 0}
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; font-weight:700; color:white}
+    .navlinks{display:flex; gap:12px; align-items:center}
+    .btn {background:var(--accent); color:white; padding:10px 14px; border-radius:12px; display:inline-flex; gap:8px; align-items:center; font-weight:600}
+    .ghost {border-radius:12px; padding:8px 12px; border:1px solid rgba(255,255,255,0.06); background:transparent}
+    /* Hero */
+    .hero{display:grid; grid-template-columns:1fr 360px; gap:28px; align-items:center; padding:48px 0}
+    .hero h1{font-size:38px; margin:0 0 8px; line-height:1.02}
+    .lead{color:var(--muted); margin:0 0 18px; max-width:62ch}
+    .ctas{display:flex; gap:12px; flex-wrap:wrap}
+    .skills{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px}
+    .pill{padding:8px 10px; border-radius:999px; background:var(--glass); color:var(--muted); font-size:13px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:12px}
+    /* Sections */
+    section{padding:48px 0; border-bottom:1px solid rgba(255,255,255,0.03)}
+    h2{font-size:22px; margin:0 0 8px}
+    .muted{color:var(--muted)}
+    /* About grid */
+    .grid-2{display:grid; grid-template-columns:1fr 320px; gap:20px; align-items:start}
+    .card{background:var(--card); border-radius:12px; padding:18px; box-shadow: 0 6px 18px rgba(2,6,23,0.6)}
+    .skills-list{display:flex; gap:8px; flex-wrap:wrap}
+    .fact-list{list-style:none; padding:0; margin:12px 0 0; color:var(--muted); font-size:14px}
+    /* Projects */
+    .projects-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    .project{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); cursor:pointer}
+    .project img{width:100%; height:160px; object-fit:cover; display:block}
+    .project-body{padding:12px}
+    .badges{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px}
+    .badge{font-size:12px; padding:6px 8px; border-radius:999px; background:rgba(0,0,0,0.18); color:var(--muted)}
+    /* Modal */
+    .modal-backdrop{position:fixed; inset:0; background:rgba(2,6,23,0.6); display:flex; align-items:center; justify-content:center; z-index:60; padding:20px}
+    .modal{max-width:920px; width:100%; max-height:92vh; overflow:auto; border-radius:12px; background:var(--card); padding:20px; border:1px solid rgba(255,255,255,0.04)}
+    /* Contact */
+    .contact-grid{display:grid; grid-template-columns:1fr 320px; gap:20px}
+    form input, form textarea{width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--text); margin-top:6px; font-size:14px}
+    form label{font-size:13px; color:var(--muted)}
+    .form-row{display:flex; gap:12px}
+    .small{font-size:13px; color:var(--muted)}
+    footer{padding:28px 0; text-align:center; color:var(--muted)}
+    /* Responsive */
+    @media (max-width:980px){ .projects-grid{grid-template-columns:repeat(2,1fr)} .hero{grid-template-columns:1fr} .grid-2{grid-template-columns:1fr} .contact-grid{grid-template-columns:1fr} .navlinks{display:none} }
+    @media (max-width:560px){ .projects-grid{grid-template-columns:1fr} .logo{width:40px;height:40px} .hero h1{font-size:28px} }
+    /* Focus */
+    :focus{outline:3px solid rgba(124,58,237,0.18); outline-offset:3px; border-radius:8px}
+  </style>
+</head>
+<body>
+  <script>
+    // Set initial theme based on prefers-color-scheme
+    (function(){
+      const saved = localStorage.getItem('theme');
+      const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', saved || prefers);
+    })();
+  </script>
 
-// ===== Helper Components =====
-const Container = ({ children, className = "" }) => (
-  <div className={`mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 ${className}`}>{children}</div>
-);
-
-const Section = ({ id, title, subtitle, children }) => (
-  <section id={id} className="scroll-mt-24 py-16 md:py-24">
-    <Container>
-      <div className="mb-10 md:mb-14">
-        <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
-        {subtitle && (
-          <p className="mt-3 max-w-2xl text-base text-muted-foreground md:text-lg">{subtitle}</p>
-        )}
+  <header>
+    <div class="container nav" role="navigation" aria-label="Main navigation">
+      <div class="brand">
+        <div class="logo" aria-hidden>NN</div>
+        <div>
+          <div style="font-weight:700">Ntombikayise Ncamiso</div>
+          <div style="font-size:13px; color:var(--muted)">Digital Professional · UX/UI · Front-end · Data</div>
+        </div>
       </div>
-      {children}
-    </Container>
-  </section>
-);
 
-const Tag = ({ children }) => (
-  <span className="me-2 mb-2 inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground">
-    {children}
-  </span>
-);
+      <div class="navlinks" aria-hidden>
+        <a class="ghost" href="#home">Home</a>
+        <a class="ghost" href="#about">About</a>
+        <a class="ghost" href="#projects">Projects</a>
+        <a class="ghost" href="#contact">Contact</a>
+      </div>
 
-// ===== Data (customize freely) =====
-const PROFILE = {
-  name: "Ntombikayise Ncamiso",
-  title: "Digital Professional · UX/UI · Front‑End · Marketing · Data Analytics",
-  blurb:
-    "I design and build high‑impact digital experiences—bridging strategy, design, and data to drive measurable outcomes.",
-  email: "hello@example.com", // TODO: replace
-  phone: "+27 00 000 0000", // TODO: replace
-  location: "South Africa", // optional
-  social: {
-    linkedin: "https://www.linkedin.com/in/your-handle",
-    github: "https://github.com/your-handle",
-    twitter: "https://twitter.com/your-handle",
-  },
-};
-
-const SKILLS = [
-  "UX Research",
-  "UI Design",
-  "Design Systems",
-  "Front‑End (React/TS)",
-  "Tailwind CSS",
-  "Accessibility (WCAG)",
-  "Performance Optimization",
-  "Analytics & Experimentation",
-  "SEO / Content Strategy",
-  "SQL / Python (data)",
-  "Dashboarding",
-  "Prompt Engineering",
-];
-
-const EXPERIENCE = [
-  {
-    org: "Capacity (Candidate)",
-    role: "Digital & Data Professional — Candidate",
-    period: "Jul 2025 – Present",
-    summary:
-      "Advancing full‑stack digital capabilities with a focus on AI‑assisted workflows, product thinking, and data‑informed design.",
-  },
-  {
-    org: "Anova Health Institute",
-    role: "Data Quality Officer",
-    period: "2020 – 2024",
-    summary:
-      "Owned data quality pipelines and reporting for program outcomes; established data validation routines and collaborated with cross‑functional teams to translate insights into operational improvements.",
-  },
-];
-
-const CERTIFICATIONS = [
-  { name: "Google Analytics (GA4)", issuer: "Google", year: "—" },
-  { name: "Meta Digital Marketing", issuer: "Meta", year: "—" },
-  { name: "UX Design Foundations", issuer: "—", year: "—" },
-];
-
-const PROJECTS = [
-  {
-    title: "AI‑Powered Chatbot",
-    domain: ["AI", "UX", "Front‑End"],
-    thumb: "data:image/svg+xml;utf8,\n    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 360'>\n      <rect width='600' height='360' fill='white'/>\n      <g transform='translate(300,180)'>\n        <circle r='120' fill='none' stroke='black' stroke-width='8'/>\n        <circle r='6' cx='-40' fill='black'/>\n        <circle r='6' cx='40' fill='black'/>\n        <path d='M -60 40 Q 0 90 60 40' fill='none' stroke='black' stroke-width='8' stroke-linecap='round'/>\n      </g>\n      <text x='300' y='330' text-anchor='middle' font-size='24' fill='black'>AI Chatbot</text>\n    </svg>",
-    summary:
-      "Conversational assistant for customer support with retrieval‑augmented responses and task automation.",
-    impact: [
-      "30% reduction in first‑response time",
-      "CSAT +12 points",
-      "Automated FAQ + ticket deflection",
-    ],
-    stack: ["React", "TypeScript", "Node", "Vector Search"],
-    caseStudy:
-      "Designed persona‑aligned conversation flows, prototyped in Figma, implemented a React chat UI with accessibility and streaming responses. Integrated analytics for utterance mapping and continuous improvement.",
-    link: "#",
-  },
-  {
-    title: "Prototype Design System",
-    domain: ["Design", "Systems"],
-    thumb:
-      "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 360'><rect width='600' height='360' fill='white'/><rect x='60' y='60' width='160' height='80' stroke='black' fill='none' stroke-width='8'/><rect x='240' y='60' width='160' height='80' stroke='black' fill='none' stroke-width='8'/><rect x='420' y='60' width='120' height='80' stroke='black' fill='none' stroke-width='8'/><rect x='60' y='170' width='220' height='130' stroke='black' fill='none' stroke-width='8'/><rect x='300' y='170' width='240' height='130' stroke='black' fill='none' stroke-width='8'/><text x='300' y='330' text-anchor='middle' font-size='24'>Design System</text></svg>",
-    summary:
-      "Unified token‑driven design system with responsive primitives and accessibility baked in.",
-    impact: ["Ship velocity +40%", "UI inconsistency −60%"],
-    stack: ["Figma", "React", "Tailwind", "Storybook"],
-    caseStudy:
-      "Defined foundations (type, color, spacing), built composable components, automated visual regression with Storybook CI.",
-    link: "#",
-  },
-  {
-    title: "Custom Content Generator",
-    domain: ["AI", "Marketing"],
-    thumb:
-      "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 360'><rect width='600' height='360' fill='white'/><path d='M80 120h440v40H80zM80 180h280v40H80zM80 240h360v40H80z' fill='black'/><text x='300' y='330' text-anchor='middle' font-size='24'>Content Generator</text></svg>",
-    summary:
-      "Generative tooling for campaign copy with brand‑safe controls and templates.",
-    impact: ["Copy production time −70%", "CTR +18%"],
-    stack: ["Next.js", "TypeScript", "OpenAI API"],
-    caseStudy:
-      "Built prompt library, guardrails, and editorial workflow integration; added A/B testing hooks for continuous learning.",
-    link: "#",
-  },
-  {
-    title: "Bias Audit Report System",
-    domain: ["AI", "Data"],
-    thumb:
-      "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 360'><rect width='600' height='360' fill='white'/><g transform='translate(80,260)'><rect width='60' height='-120' x='0' fill='black'/><rect width='60' height='-80' x='80' fill='black'/><rect width='60' height='-160' x='160' fill='black'/><rect width='60' height='-100' x='240' fill='black'/><rect width='60' height='-140' x='320' fill='black'/></g><text x='300' y='330' text-anchor='middle' font-size='24'>Bias Audit</text></svg>",
-    summary:
-      "Framework to detect and report bias across datasets and model outputs.",
-    impact: ["Compliance readiness", "Reduced disparity metrics"],
-    stack: ["Python", "Pandas", "Scikit‑learn", "Evidently"],
-    caseStudy:
-      "Defined fairness metrics, automated drift reports, and produced executive‑friendly narratives with actionable recommendations.",
-    link: "#",
-  },
-  {
-    title: "Marketing Attribution Dashboard",
-    domain: ["Analytics"],
-    thumb:
-      "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 360'><rect width='600' height='360' fill='white'/><polyline points='60,280 180,200 300,240 420,120 540,160' stroke='black' stroke-width='8' fill='none'/><text x='300' y='330' text-anchor='middle' font-size='24'>Attribution</text></svg>",
-    summary:
-      "Cross‑channel performance dashboard with MMM and last‑touch comparisons.",
-    impact: ["+22% ROAS", "Budget reallocation insights"],
-    stack: ["SQL", "dbt", "Metabase"],
-    caseStudy:
-      "Unified data sources, applied simple MMM, and surfaced actionable levers for investment.",
-    link: "#",
-  },
-  {
-    title: "Responsive E‑commerce Frontend",
-    domain: ["Front‑End", "UX"],
-    thumb:
-      "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 360'><rect width='600' height='360' fill='white'/><rect x='60' y='80' width='480' height='200' stroke='black' fill='none' stroke-width='8'/><circle cx='160' cy='180' r='40' fill='black'/><rect x='240' y='150' width='240' height='60' fill='black'/><text x='300' y='330' text-anchor='middle' font-size='24'>E‑commerce</text></svg>",
-    summary:
-      "High‑performance storefront with accessibility and micro‑animations.",
-    impact: ["LCP < 2s", "Checkout completion +9%"],
-    stack: ["React", "Vite", "Tailwind", "ARIA"],
-    caseStudy:
-      "Optimized images, minimized JS, and implemented keyboard‑first interactions.",
-    link: "#",
-  },
-  {
-    title: "SEO & Content Campaign",
-    domain: ["Marketing"],
-    thumb:
-      "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 360'><rect width='600' height='360' fill='white'/><path d='M100 260h400v8H100zM120 220h280v8H120zM160 180h320v8H160z' fill='black'/><text x='300' y='330' text-anchor='middle' font-size='24'>SEO Campaign</text></svg>",
-    summary:
-      "Content strategy with technical SEO fixes and editorial calendar.",
-    impact: ["Organic sessions +45%", "Ranked #1 for 6 keywords"],
-    stack: ["GA4", "GSC", "Ahrefs"],
-    caseStudy:
-      "Resolved crawl issues, implemented schema, and launched pillar‑cluster content that compounded over time.",
-    link: "#",
-  },
-];
-
-// ===== UI =====
-export default function Portfolio() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [dark, setDark] = useState(true);
-  const [activeProject, setActiveProject] = useState(null);
-
-  useEffect(() => {
-    if (dark) document.documentElement.classList.add("dark");
-    else document.documentElement.classList.remove("dark");
-  }, [dark]);
-
-  // Reduce motion preference
-  const prefersReducedMotion = useMemo(() => typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches, []);
-
-  return (
-    <div className="min-h-screen bg-background text-foreground antialiased">
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 rounded-md bg-primary px-3 py-2 text-primary-foreground">Skip to content</a>
-
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <Container className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10">
-              <Sparkles className="h-5 w-5" aria-hidden />
-            </div>
-            <div className="leading-tight">
-              <p className="text-sm font-medium">{PROFILE.name}</p>
-              <p className="text-xs text-muted-foreground">Portfolio</p>
-            </div>
-          </div>
-
-          <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
-            <a href="#home" className="text-sm hover:text-primary">Home</a>
-            <a href="#about" className="text-sm hover:text-primary">About</a>
-            <a href="#work" className="text-sm hover:text-primary">Projects</a>
-            <a href="#contact" className="text-sm hover:text-primary">Contact</a>
-            <Button variant="ghost" size="icon" aria-label="Toggle theme" onClick={() => setDark(d => !d)}>
-              {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
-          </nav>
-
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon" aria-label="Open menu" onClick={() => setMenuOpen(true)}>
-              <Menu className="h-5 w-5" />
-            </Button>
-          </div>
-        </Container>
-      </header>
-
-      {/* Mobile menu */}
-      <AnimatePresence>{menuOpen && (
-        <motion.div className="fixed inset-0 z-50 bg-background/80 backdrop-blur" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
-          <motion.nav className="absolute right-4 top-4 w-[calc(100%-2rem)] max-w-sm rounded-2xl border bg-background p-6 shadow-xl" initial={{x:20,opacity:0}} animate={{x:0,opacity:1}} exit={{x:20,opacity:0}}>
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-sm font-medium">Navigate</p>
-              <Button variant="ghost" size="icon" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="grid gap-3">
-              {[
-                {href: "#home", label: "Home"},
-                {href: "#about", label: "About"},
-                {href: "#work", label: "Projects"},
-                {href: "#contact", label: "Contact"},
-              ].map((item) => (
-                <a key={item.href} href={item.href} className="rounded-xl p-3 hover:bg-muted" onClick={() => setMenuOpen(false)}>{item.label}</a>
-              ))}
-              <Button className="mt-2" onClick={() => setDark(d=>!d)}>
-                {dark ? <><Sun className="mr-2 h-4 w-4"/>Light</> : <><Moon className="mr-2 h-4 w-4"/>Dark</>}
-              </Button>
-            </div>
-          </motion.nav>
-        </motion.div>
-      )}</AnimatePresence>
-
-      <main id="main">
-        {/* Hero */}
-        <section id="home" className="relative overflow-hidden border-b">
-          <Container className="relative flex min-h-[66vh] flex-col items-start justify-center py-16 md:py-28">
-            <motion.h1 initial={prefersReducedMotion?{}:{opacity:0,y:10}} whileInView={prefersReducedMotion?{}:{opacity:1,y:0}} viewport={{once:true}} transition={{duration:0.5}} className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
-              Building digital products that are <span className="text-primary">usable</span>, <span className="text-primary">beautiful</span>, and <span className="text-primary">measurable</span>.
-            </motion.h1>
-            <p className="mt-5 max-w-2xl text-base text-muted-foreground md:text-lg">
-              {PROFILE.blurb}
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="#work" className="inline-flex items-center gap-2 rounded-2xl bg-primary px-5 py-3 text-sm font-medium text-primary-foreground shadow transition hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary">
-                View Projects <ArrowRight className="h-4 w-4" />
-              </a>
-              <a href="#contact" className="inline-flex items-center gap-2 rounded-2xl border px-5 py-3 text-sm font-medium hover:bg-muted">
-                Contact
-              </a>
-              <a href="#" className="inline-flex items-center gap-2 rounded-2xl border px-5 py-3 text-sm font-medium hover:bg-muted" aria-label="Download resume">
-                <Download className="h-4 w-4"/> Resume
-              </a>
-            </div>
-            <div className="mt-8 flex flex-wrap items-center gap-2">
-              {SKILLS.slice(0,6).map(s => (
-                <Badge key={s} variant="secondary" className="rounded-full">{s}</Badge>
-              ))}
-            </div>
-
-            {/* Subtle background grid */}
-            <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.15),transparent_60%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.2),transparent_60%)]" />
-          </Container>
-        </section>
-
-        {/* About */}
-        <Section id="about" title="About Me" subtitle="A hybrid creative technologist with a data‑driven mindset.">
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="md:col-span-2">
-              <Card>
-                <CardContent className="p-6">
-                  <div className="prose dark:prose-invert max-w-none">
-                    <p>
-                      I'm {PROFILE.name}, a digital professional specializing in UX/UI design, front‑end development, digital marketing, and data analytics. I thrive at the intersection of user needs and business goals—prototyping quickly, validating with data, and shipping with polish.
-                    </p>
-                    <ul>
-                      <li>
-                        <strong>Capacity (Candidate)</strong>, Jul 2025 – Present — strengthening AI‑augmented product workflows.
-                      </li>
-                      <li>
-                        <strong>Anova Health Institute</strong>, Data Quality Officer, 2020 – 2024 — developed robust data quality checks, reporting, and insight pipelines; foundation of my data analytics skillset.
-                      </li>
-                    </ul>
-                    <p>
-                      Certifications include GA4, Meta Digital Marketing, and UX foundations. I care deeply about accessibility and performance, and I design systems that scale.
-                    </p>
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                    <span className="inline-flex items-center gap-1"><MapPin className="h-4 w-4"/> {PROFILE.location}</span>
-                    <span className="inline-flex items-center gap-1"><Calendar className="h-4 w-4"/> Available for select projects</span>
-                    <span className="inline-flex items-center gap-1"><Award className="h-4 w-4"/> Certifications: {CERTIFICATIONS.map(c=>c.name).join(', ')}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="space-y-4">
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Core Skills</h3>
-                  <div className="flex flex-wrap">
-                    {SKILLS.map((s) => (
-                      <Tag key={s}>{s}</Tag>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Experience</h3>
-                  <ul className="space-y-3">
-                    {EXPERIENCE.map((exp) => (
-                      <li key={exp.org} className="rounded-xl border p-3">
-                        <p className="font-medium">{exp.role}</p>
-                        <p className="text-sm text-muted-foreground">{exp.org} · {exp.period}</p>
-                        <p className="mt-1 text-sm">{exp.summary}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </Section>
-
-        {/* Projects */}
-        <Section id="work" title="Selected Projects" subtitle="A cross‑section of AI, product design, marketing, and analytics work.">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {PROJECTS.map((p, idx) => (
-              <article key={p.title} className="group relative flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm">
-                <button className="text-left" onClick={() => setActiveProject(p)} aria-label={`Open case study ${p.title}`}>
-                  <div className="aspect-[4/3] w-full overflow-hidden border-b bg-muted">
-                    {/* Using lightweight SVG data URIs as placeholders for performance */}
-                    <img src={p.thumb} alt="Project thumbnail" className="h-full w-full object-cover transition duration-300 group-hover:scale-105"/>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold">{p.title}</h3>
-                    <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{p.summary}</p>
-                    <div className="mt-3 flex flex-wrap items-center gap-2">
-                      {p.domain.map((d) => (
-                        <Badge key={d} variant="secondary" className="rounded-full">{d}</Badge>
-                      ))}
-                    </div>
-                    <div className="mt-4 flex items-center gap-2 text-sm text-primary">
-                      <span>View case study</span>
-                      <ExternalLink className="h-4 w-4"/>
-                    </div>
-                  </div>
-                </button>
-              </article>
-            ))}
-          </div>
-
-          {/* Case Study Modal */}
-          <AnimatePresence>
-            {activeProject && (
-              <motion.div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-6" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
-                <motion.div role="dialog" aria-modal="true" className="relative h-[92vh] w-full max-w-3xl overflow-auto rounded-t-2xl border bg-background shadow-xl sm:rounded-2xl" initial={{y:30,opacity:0}} animate={{y:0,opacity:1}} exit={{y:30,opacity:0}}>
-                  <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/90 px-4 py-3 backdrop-blur">
-                    <div>
-                      <h3 className="text-lg font-semibold">{activeProject.title}</h3>
-                      <p className="text-xs text-muted-foreground">{activeProject.domain.join(' · ')}</p>
-                    </div>
-                    <Button variant="ghost" size="icon" aria-label="Close case study" onClick={() => setActiveProject(null)}>
-                      <X className="h-5 w-5" />
-                    </Button>
-                  </div>
-                  <div className="space-y-6 p-6">
-                    <img src={activeProject.thumb} alt="Case study hero" className="mx-auto w-full max-w-2xl rounded-xl border"/>
-                    <div className="prose dark:prose-invert max-w-none">
-                      <h4>Overview</h4>
-                      <p>{activeProject.summary}</p>
-                      <h4>Approach</h4>
-                      <p>{activeProject.caseStudy}</p>
-                      <h4>Impact</h4>
-                      <ul>
-                        {activeProject.impact.map((i) => (
-                          <li key={i} className="flex items-start gap-2"><CheckCircle2 className="mt-1 h-4 w-4"/> <span>{i}</span></li>
-                        ))}
-                      </ul>
-                      <h4>Stack</h4>
-                      <p>{activeProject.stack.join(', ')}</p>
-                      <p className="text-sm text-muted-foreground">Links and source available on request.</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </Section>
-
-        {/* Contact */}
-        <Section id="contact" title="Let’s work together" subtitle="Have a project in mind or want to collaborate? Send a message.">
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="md:col-span-2">
-              <Card>
-                <CardContent className="p-6">
-                  <form className="grid gap-4" action="https://formspree.io/f/your-id" method="POST">
-                    <div className="grid gap-2">
-                      <label htmlFor="name" className="text-sm font-medium">Name</label>
-                      <Input id="name" name="name" required placeholder="Your full name"/>
-                    </div>
-                    <div className="grid gap-2">
-                      <label htmlFor="email" className="text-sm font-medium">Email</label>
-                      <Input id="email" name="email" type="email" required placeholder="you@example.com"/>
-                    </div>
-                    <div className="grid gap-2">
-                      <label htmlFor="message" className="text-sm font-medium">Message</label>
-                      <Textarea id="message" name="message" required placeholder="Tell me about your project" rows={5}/>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Button type="submit" className="">Send</Button>
-                      <p className="text-xs text-muted-foreground">I typically respond within 2 business days.</p>
-                    </div>
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="space-y-4">
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Contact</h3>
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-center gap-2"><Mail className="h-4 w-4"/> <a className="hover:underline" href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a></li>
-                    <li className="flex items-center gap-2"><Phone className="h-4 w-4"/> <a className="hover:underline" href={`tel:${PROFILE.phone}`}>{PROFILE.phone}</a></li>
-                    <li className="flex items-center gap-2"><Linkedin className="h-4 w-4"/> <a className="hover:underline" href={PROFILE.social.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></li>
-                    <li className="flex items-center gap-2"><Github className="h-4 w-4"/> <a className="hover:underline" href={PROFILE.social.github} target="_blank" rel="noreferrer">GitHub</a></li>
-                    <li className="flex items-center gap-2"><Twitter className="h-4 w-4"/> <a className="hover:underline" href={PROFILE.social.twitter} target="_blank" rel="noreferrer">Twitter</a></li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Quick Facts</h3>
-                  <ul className="space-y-2 text-sm">
-                    <li>Time zone: Africa/Johannesburg (SAST)</li>
-                    <li>Open to: Full‑time or contract</li>
-                    <li>Focus: AI‑assisted product, data‑informed UX</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </Section>
-      </main>
-
-      <footer className="border-t py-10 text-sm text-muted-foreground">
-        <Container className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <p>© {new Date().getFullYear()} {PROFILE.name}. All rights reserved.</p>
-          <div className="flex items-center gap-3">
-            <a className="rounded-md p-2 hover:bg-muted" href={PROFILE.social.linkedin} aria-label="LinkedIn"><Linkedin className="h-4 w-4"/></a>
-            <a className="rounded-md p-2 hover:bg-muted" href={PROFILE.social.github} aria-label="GitHub"><Github className="h-4 w-4"/></a>
-            <a className="rounded-md p-2 hover:bg-muted" href={PROFILE.social.twitter} aria-label="Twitter"><Twitter className="h-4 w-4"/></a>
-          </div>
-        </Container>
-      </footer>
-
-      <style>{`
-        :root {
-          color-scheme: light dark;
-        }
-        /* Ensure dark mode variables for Tailwind/shadcn contexts */
-      `}</style>
+      <div style="display:flex; gap:10px; align-items:center">
+        <button id="themeToggle" class="ghost" aria-label="Toggle theme">Toggle theme</button>
+        <a class="btn" href="#projects">View projects</a>
+      </div>
     </div>
-  );
-}
+  </header>
 
-            
-            
-        
-    
-   
-          
-       
-            
- 
-                         
-           
-                     
-                   
+  <main>
+    <section id="home" class="container hero" aria-labelledby="hero-heading">
+      <div>
+        <h1 id="hero-heading">Hi — I'm <strong style="color:var(--accent)">Ntombikayise Ncamiso</strong><br><span style="font-weight:500; color:var(--muted); font-size:18px">Digital professional — UX/UI, Front-end, Digital Marketing & Data Analytics</span></h1>
+        <p class="lead">I design and build sleek, performant digital experiences that connect user needs with measurable business outcomes. I combine product thinking, design systems, and data to ship work that scales.</p>
+
+        <div class="ctas">
+          <a class="btn" href="#projects">See projects</a>
+          <a class="ghost" href="#contact">Contact</a>
+          <a class="ghost" href="#" download="Ntombikayise_Ncamiso_Resume.pdf">Download CV</a>
+        </div>
+
+        <div class="skills" aria-hidden>
+          <div class="pill">UX / UI Design</div>
+          <div class="pill">React / Front-end</div>
+          <div class="pill">Data Analytics</div>
+          <div class="pill">Design Systems</div>
+          <div class="pill">AI / ML tooling</div>
+        </div>
+
+        <div style="margin-top:18px; color:var(--muted); font-size:13px">Available for full-time & contract · Time zone: Africa/Johannesburg (SAST)</div>
+      </div>
+
+      <aside class="hero-card" aria-labelledby="contact-card-title">
+        <h3 id="contact-card-title" style="margin:0 0 6px">Quick contact</h3>
+        <div class="small">Email</div>
+        <div style="font-weight:600; margin-bottom:8px"><a href="mailto:hello@example.com">hello@example.com</a></div>
+        <div class="small">Location</div>
+        <div style="margin-bottom:8px">South Africa</div>
+        <div class="small">Current</div>
+        <div style="font-weight:600">Candidate — Capacity (Jul 2025 — Present)</div>
+        <div style="margin-top:10px" class="muted">Previously: Data Quality Officer — Anova Health Institute (2020–2024)</div>
+
+        <div style="margin-top:12px; display:flex; gap:8px; align-items:center">
+          <a aria-label="LinkedIn" href="#" class="ghost">LinkedIn</a>
+          <a aria-label="GitHub" href="#" class="ghost">GitHub</a>
+          <a aria-label="Twitter" href="#" class="ghost">Twitter</a>
+        </div>
+      </aside>
+    </section>
+
+    <section id="about" class="container" aria-labelledby="about-heading">
+      <h2 id="about-heading">About</h2>
+      <p class="muted">A hybrid creative technologist with a data-driven mindset. I prototype quickly, validate with data, and ship polished experiences.</p>
+
+      <div class="grid-2" style="margin-top:18px">
+        <div class="card" role="region" aria-label="About details">
+          <h3 style="margin-top:0">Profile</h3>
+          <p style="color:var(--muted)">I'm Ntombikayise — I specialize in design, front-end engineering and analytics. I work on AI-enabled products, design systems, marketing tooling and dashboards that help teams make better decisions.</p>
+
+          <h4 style="margin-top:12px">Experience highlights</h4>
+          <ul class="fact-list">
+            <li><strong>Capacity</strong> — Candidate (Jul 2025 — Present)</li>
+            <li><strong>Anova Health Institute</strong> — Data Quality Officer (2020 — 2024)</li>
+          </ul>
+
+          <h4 style="margin-top:12px">Certifications</h4>
+          <div class="small">GA4 • Meta Digital Marketing • UX Foundations</div>
+        </div>
+
+        <aside>
+          <div class="card" role="region" aria-labelledby="skills-heading">
+            <h4 id="skills-heading">Core skills</h4>
+            <div class="skills-list" style="margin-top:10px">
+              <div class="pill">UX Research</div>
+              <div class="pill">UI Design</div>
+              <div class="pill">React / TypeScript</div>
+              <div class="pill">Tailwind / CSS</div>
+              <div class="pill">SQL / Python</div>
+              <div class="pill">Analytics & Dashboarding</div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:12px">
+            <h4 style="margin-top:0">What I care about</h4>
+            <ul class="small" style="margin:6px 0 0; padding-left:18px">
+              <li>Accessibility (WCAG)</li>
+              <li>Performance & SEO</li>
+              <li>Ethical AI & bias testing</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="projects" class="container" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Selected projects</h2>
+      <p class="muted">Case studies across AI, design systems, marketing tooling and analytics.</p>
+
+      <div class="projects-grid" style="margin-top:18px">
+        <!-- Project 1 -->
+        <article class="project" tabindex="0" data-project='{"title":"AI-Powered Chatbot","summary":"Conversational assistant for customer support: retrieval-augmented responses, persona flows and analytics.","impact":["30% reduction in first-response time","CSAT +12 points","Automated FAQ + ticket deflection"],"stack":["React","TypeScript","Node","Vector Search"],"case":"Designed persona-aligned flows, prototyped in Figma, implemented accessible chat UI and analytics."}'>
+          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#081229"/><g transform="translate(300,180)"><circle r="120" fill="none" stroke="#7c3aed" stroke-width="6"/><circle r="6" cx="-40" fill="#7c3aed"/><circle r="6" cx="40" fill="#7c3aed"/><path d="M -60 40 Q 0 90 60 40" fill="none" stroke="#06b6d4" stroke-width="6" stroke-linecap="round"/></g><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">AI Chatbot</text></svg>
+          <div class="project-body">
+            <strong>AI-Powered Chatbot</strong>
+            <div class="badges"><span class="badge">AI</span><span class="badge">UX</span><span class="badge">Frontend</span></div>
+            <div style="margin-top:8px;color:var(--muted);font-size:13px">Retrieval augmented chat, analytics & performance focused.</div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project" tabindex="0" data-project='{"title":"Prototype Design System","summary":"Token-driven design system with responsive primitives and accessibility baked in.","impact":["Ship velocity +40%","UI inconsistency -60%"],"stack":["Figma","React","Tailwind","Storybook"],"case":"Defined tokens, built components, and automated visual regression testing."}'>
+          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#08202b"/><rect x="60" y="60" width="160" height="80" stroke="#7c3aed" fill="none" stroke-width="6"/><rect x="240" y="60" width="160" height="80" stroke="#06b6d4" fill="none" stroke-width="6"/><rect x="420" y="60" width="120" height="80" stroke="#8b5cf6" fill="none" stroke-width="6"/><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">Design System</text></svg>
+          <div class="project-body">
+            <strong>Prototype Design System</strong>
+            <div class="badges"><span class="badge">Design</span><span class="badge">System</span></div>
+            <div style="margin-top:8px;color:var(--muted);font-size:13px">Tokens, components and docs for scale.</div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project" tabindex="0" data-project='{"title":"Custom Content Generator","summary":"Generative tooling for campaign copy with brand-safe controls and templates.","impact":["Copy production time -70%","CTR +18%"],"stack":["Next.js","OpenAI API","TypeScript"],"case":"Built prompt library, guardrails and editorial workflow with A/B testing hooks."}'>
+          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#041226"/><path d="M80 120h440v40H80zM80 180h280v40H80zM80 240h360v40H80z" fill="#7c3aed"/><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">Content Gen</text></svg>
+          <div class="project-body">
+            <strong>Custom Content Generator</strong>
+            <div class="badges"><span class="badge">AI</span><span class="badge">Marketing</span></div>
+            <div style="margin-top:8px;color:var(--muted);font-size:13px">Brand-safe generative copy + workflow integration.</div>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project" tabindex="0" data-project='{"title":"Bias Audit Report System","summary":"Framework to detect and report bias across datasets and model outputs.","impact":["Compliance readiness","Reduced disparity metrics"],"stack":["Python","Pandas","Evidently"],"case":"Defined fairness metrics, automated drift reports, and executive narratives."}'>
+          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#041225"/><g transform="translate(80,260)"><rect width="60" height="-120" x="0" fill="#06b6d4"/><rect width="60" height="-80" x="80" fill="#7c3aed"/><rect width="60" height="-160" x="160" fill="#06b6d4"/><rect width="60" height="-100" x="240" fill="#7c3aed"/></g><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">Bias Audit</text></svg>
+          <div class="project-body">
+            <strong>Bias Audit Report System</strong>
+            <div class="badges"><span class="badge">AI</span><span class="badge">Data</span></div>
+            <div style="margin-top:8px;color:var(--muted);font-size:13px">Automated fairness & drift reporting for models & datasets.</div>
+          </div>
+        </article>
+
+        <!-- Project 5 -->
+        <article class="project" tabindex="0" data-project='{"title":"Marketing Attribution Dashboard","summary":"Cross-channel performance dashboard with MMM and last-touch comparisons.","impact":["+22% ROAS","Budget reallocation insights"],"stack":["SQL","dbt","Metabase"],"case":"Unified sources, applied MMM and surfaced levers for investment."}'>
+          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#071226"/><polyline points="60,280 180,200 300,240 420,120 540,160" stroke="#7c3aed" stroke-width="8" fill="none"/><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">Attribution</text></svg>
+          <div class="project-body">
+            <strong>Marketing Attribution Dashboard</strong>
+            <div class="badges"><span class="badge">Analytics</span></div>
+            <div style="margin-top:8px;color:var(--muted);font-size:13px">ROAS analysis & channel optimization.</div>
+          </div>
+        </article>
+
+        <!-- Project 6 -->
+        <article class="project" tabindex="0" data-project='{"title":"Responsive E-commerce Frontend","summary":"High-performance storefront with accessibility and micro-animations.","impact":["LCP < 2s","Checkout completion +9%"],"stack":["React","Vite","Tailwind"],"case":"Optimized images, minimized JS and implemented keyboard-first interactions."}'>
+          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#041227"/><rect x="60" y="80" width="480" height="200" stroke="#06b6d4" fill="none" stroke-width="6"/><circle cx="160" cy="180" r="40" fill="#7c3aed"/><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">E-commerce</text></svg>
+          <div class="project-body">
+            <strong>Responsive E-commerce Frontend</strong>
+            <div class="badges"><span class="badge">Front-end</span><span class="badge">UX</span></div>
+            <div style="margin-top:8px;color:var(--muted);font-size:13px">Fast, accessible shopping experience.</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="container" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Let’s work together</h2>
+      <p class="muted">Have a project or opportunity? Send me a message or connect on LinkedIn / GitHub.</p>
+
+      <div class="contact-grid" style="margin-top:18px">
+        <div class="card">
+          <form id="contactForm" action="#" method="POST" novalidate>
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" required placeholder="Your full name" />
+            </div>
+            <div style="margin-top:12px">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required placeholder="you@example.com" />
+            </div>
+            <div style="margin-top:12px">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required placeholder="Tell me about your project"></textarea>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px">
+              <button type="submit" class="btn">Send message</button>
+              <div class="small muted">I typically respond within 2 business days.</div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="card">
+          <h4 style="margin-top:0">Contact</h4>
+          <div style="margin-top:8px">
+            <div class="small">Email</div>
+            <div style="font-weight:600; margin-bottom:8px"><a href="mailto:hello@example.com">hello@example.com</a></div>
+            <div class="small">Phone</div>
+            <div style="margin-bottom:8px">+27 00 000 0000</div>
+
+            <div style="margin-top:12px">
+              <h5 style="margin:0 0 8px">Social</h5>
+              <div style="display:flex; gap:8px">
+                <a class="ghost" href="#" aria-label="LinkedIn">LinkedIn</a>
+                <a class="ghost" href="#" aria-label="GitHub">GitHub</a>
+                <a class="ghost" href="#" aria-label="Twitter">Twitter</a>
+              </div>
+            </div>
+
+            <div style="margin-top:12px">
+              <h5 style="margin:0 0 8px">Quick facts</h5>
+              <ul class="small" style="padding-left:18px; margin:0; color:var(--muted)">
+                <li>Time zone: Africa/Johannesburg (SAST)</li>
+                <li>Open to: Full-time or contract</li>
+                <li>Focus: AI-assisted product, data-informed UX</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
   
-            
+
+  <footer>
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
+        <div>© <span id="year"></span> Ntombikayise Ncamiso</div>
+        <div style="color:var(--muted)">Built with attention to accessibility, performance & design systems.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal template (hidden) -->
+  <template id="modal-template">
+    <div class="modal-backdrop" role="dialog" aria-modal="true">
+      <div class="modal" role="document">
+        <button id="closeModa
 
