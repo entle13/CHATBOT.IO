@@ -1,335 +1,132 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ntombikayise Ncamiso — Portfolio</title>
-  <meta name="description" content="Portfolio — Ntombikayise Ncamiso — UX/UI, Front-end, Digital Marketing, Data Analytics" />
-  <meta name="author" content="Ntombikayise Ncamiso" />
-  <style>
-    /* Reset + base */
-    :root{
-      --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#7c3aed; --accent-2:#06b6d4;
-      --text:#e6eef8; --glass: rgba(255,255,255,0.04);
-    }
-    [data-theme="light"]{
-      --bg:#f8fafc; --card:#ffffff; --muted:#64748b; --accent:#6d28d9; --accent-2:#0891b2; --text:#0b1220; --glass: rgba(11,18,32,0.04);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue";
-      background:linear-gradient(180deg,var(--bg), #071123 120%); color:var(--text); -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale; line-height:1.5;
-      -webkit-tap-highlight-color:transparent;
-    }
-    a{color:inherit; text-decoration:none}
-    .container{max-width:1100px; padding:28px; margin:0 auto}
-    header{backdrop-filter: blur(6px); position:sticky; top:0; z-index:40; border-bottom:1px solid rgba(255,255,255,0.04); background:linear-gradient(180deg, rgba(0,0,0,0.12), transparent)}
-    .nav {display:flex; gap:18px; align-items:center; justify-content:space-between; padding:12px 0}
-    .brand{display:flex; gap:12px; align-items:center}
-    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; font-weight:700; color:white}
-    .navlinks{display:flex; gap:12px; align-items:center}
-    .btn {background:var(--accent); color:white; padding:10px 14px; border-radius:12px; display:inline-flex; gap:8px; align-items:center; font-weight:600}
-    .ghost {border-radius:12px; padding:8px 12px; border:1px solid rgba(255,255,255,0.06); background:transparent}
-    /* Hero */
-    .hero{display:grid; grid-template-columns:1fr 360px; gap:28px; align-items:center; padding:48px 0}
-    .hero h1{font-size:38px; margin:0 0 8px; line-height:1.02}
-    .lead{color:var(--muted); margin:0 0 18px; max-width:62ch}
-    .ctas{display:flex; gap:12px; flex-wrap:wrap}
-    .skills{display:flex; gap:8px; flex-wrap:wrap; margin-top:16px}
-    .pill{padding:8px 10px; border-radius:999px; background:var(--glass); color:var(--muted); font-size:13px}
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); padding:18px; border-radius:12px}
-    /* Sections */
-    section{padding:48px 0; border-bottom:1px solid rgba(255,255,255,0.03)}
-    h2{font-size:22px; margin:0 0 8px}
-    .muted{color:var(--muted)}
-    /* About grid */
-    .grid-2{display:grid; grid-template-columns:1fr 320px; gap:20px; align-items:start}
-    .card{background:var(--card); border-radius:12px; padding:18px; box-shadow: 0 6px 18px rgba(2,6,23,0.6)}
-    .skills-list{display:flex; gap:8px; flex-wrap:wrap}
-    .fact-list{list-style:none; padding:0; margin:12px 0 0; color:var(--muted); font-size:14px}
-    /* Projects */
-    .projects-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
-    .project{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); cursor:pointer}
-    .project img{width:100%; height:160px; object-fit:cover; display:block}
-    .project-body{padding:12px}
-    .badges{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px}
-    .badge{font-size:12px; padding:6px 8px; border-radius:999px; background:rgba(0,0,0,0.18); color:var(--muted)}
-    /* Modal */
-    .modal-backdrop{position:fixed; inset:0; background:rgba(2,6,23,0.6); display:flex; align-items:center; justify-content:center; z-index:60; padding:20px}
-    .modal{max-width:920px; width:100%; max-height:92vh; overflow:auto; border-radius:12px; background:var(--card); padding:20px; border:1px solid rgba(255,255,255,0.04)}
-    /* Contact */
-    .contact-grid{display:grid; grid-template-columns:1fr 320px; gap:20px}
-    form input, form textarea{width:100%; padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--text); margin-top:6px; font-size:14px}
-    form label{font-size:13px; color:var(--muted)}
-    .form-row{display:flex; gap:12px}
-    .small{font-size:13px; color:var(--muted)}
-    footer{padding:28px 0; text-align:center; color:var(--muted)}
-    /* Responsive */
-    @media (max-width:980px){ .projects-grid{grid-template-columns:repeat(2,1fr)} .hero{grid-template-columns:1fr} .grid-2{grid-template-columns:1fr} .contact-grid{grid-template-columns:1fr} .navlinks{display:none} }
-    @media (max-width:560px){ .projects-grid{grid-template-columns:1fr} .logo{width:40px;height:40px} .hero h1{font-size:28px} }
-    /* Focus */
-    :focus{outline:3px solid rgba(124,58,237,0.18); outline-offset:3px; border-radius:8px}
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ntombikayise Ncamiso | Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <script>
-    // Set initial theme based on prefers-color-scheme
-    (function(){
-      const saved = localStorage.getItem('theme');
-      const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', saved || prefers);
-    })();
-  </script>
-
+  <!-- HEADER -->
   <header>
-    <div class="container nav" role="navigation" aria-label="Main navigation">
-      <div class="brand">
-        <div class="logo" aria-hidden>NN</div>
-        <div>
-          <div style="font-weight:700">Ntombikayise Ncamiso</div>
-          <div style="font-size:13px; color:var(--muted)">Digital Professional · UX/UI · Front-end · Data</div>
-        </div>
-      </div>
-
-      <div class="navlinks" aria-hidden>
-        <a class="ghost" href="#home">Home</a>
-        <a class="ghost" href="#about">About</a>
-        <a class="ghost" href="#projects">Projects</a>
-        <a class="ghost" href="#contact">Contact</a>
-      </div>
-
-      <div style="display:flex; gap:10px; align-items:center">
-        <button id="themeToggle" class="ghost" aria-label="Toggle theme">Toggle theme</button>
-        <a class="btn" href="#projects">View projects</a>
-      </div>
-    </div>
+    <h1>Ntombikayise Ncamiso</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <main>
-    <section id="home" class="container hero" aria-labelledby="hero-heading">
-      <div>
-        <h1 id="hero-heading">Hi — I'm <strong style="color:var(--accent)">Ntombikayise Ncamiso</strong><br><span style="font-weight:500; color:var(--muted); font-size:18px">Digital professional — UX/UI, Front-end, Digital Marketing & Data Analytics</span></h1>
-        <p class="lead">I design and build sleek, performant digital experiences that connect user needs with measurable business outcomes. I combine product thinking, design systems, and data to ship work that scales.</p>
+  <!-- HERO -->
+  <section id="hero">
+    <h2>Digital Professional</h2>
+    <p>UX/UI · Front-End · Marketing · Data Analytics</p>
+    <a href="#projects" class="btn">View My Work</a>
+  </section>
 
-        <div class="ctas">
-          <a class="btn" href="#projects">See projects</a>
-          <a class="ghost" href="#contact">Contact</a>
-          <a class="ghost" href="#" download="Ntombikayise_Ncamiso_Resume.pdf">Download CV</a>
-        </div>
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      I am a digital professional with advanced skills in UX/UI design, front-end development,
+      digital marketing, and data analytics. Currently a candidate at Capacity (July 2025–Present),
+      and former Data Quality Officer at Anova Health Institute (2020–2024), where I honed my
+      expertise in data analytics.
+    </p>
+  </section>
 
-        <div class="skills" aria-hidden>
-          <div class="pill">UX / UI Design</div>
-          <div class="pill">React / Front-end</div>
-          <div class="pill">Data Analytics</div>
-          <div class="pill">Design Systems</div>
-          <div class="pill">AI / ML tooling</div>
-        </div>
-
-        <div style="margin-top:18px; color:var(--muted); font-size:13px">Available for full-time & contract · Time zone: Africa/Johannesburg (SAST)</div>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>AI-Powered Chatbot</h3>
+        <p>Conversational AI tool for customer engagement.</p>
       </div>
-
-      <aside class="hero-card" aria-labelledby="contact-card-title">
-        <h3 id="contact-card-title" style="margin:0 0 6px">Quick contact</h3>
-        <div class="small">Email</div>
-        <div style="font-weight:600; margin-bottom:8px"><a href="mailto:hello@example.com">hello@example.com</a></div>
-        <div class="small">Location</div>
-        <div style="margin-bottom:8px">South Africa</div>
-        <div class="small">Current</div>
-        <div style="font-weight:600">Candidate — Capacity (Jul 2025 — Present)</div>
-        <div style="margin-top:10px" class="muted">Previously: Data Quality Officer — Anova Health Institute (2020–2024)</div>
-
-        <div style="margin-top:12px; display:flex; gap:8px; align-items:center">
-          <a aria-label="LinkedIn" href="#" class="ghost">LinkedIn</a>
-          <a aria-label="GitHub" href="#" class="ghost">GitHub</a>
-          <a aria-label="Twitter" href="#" class="ghost">Twitter</a>
-        </div>
-      </aside>
-    </section>
-
-    <section id="about" class="container" aria-labelledby="about-heading">
-      <h2 id="about-heading">About</h2>
-      <p class="muted">A hybrid creative technologist with a data-driven mindset. I prototype quickly, validate with data, and ship polished experiences.</p>
-
-      <div class="grid-2" style="margin-top:18px">
-        <div class="card" role="region" aria-label="About details">
-          <h3 style="margin-top:0">Profile</h3>
-          <p style="color:var(--muted)">I'm Ntombikayise — I specialize in design, front-end engineering and analytics. I work on AI-enabled products, design systems, marketing tooling and dashboards that help teams make better decisions.</p>
-
-          <h4 style="margin-top:12px">Experience highlights</h4>
-          <ul class="fact-list">
-            <li><strong>Capacity</strong> — Candidate (Jul 2025 — Present)</li>
-            <li><strong>Anova Health Institute</strong> — Data Quality Officer (2020 — 2024)</li>
-          </ul>
-
-          <h4 style="margin-top:12px">Certifications</h4>
-          <div class="small">GA4 • Meta Digital Marketing • UX Foundations</div>
-        </div>
-
-        <aside>
-          <div class="card" role="region" aria-labelledby="skills-heading">
-            <h4 id="skills-heading">Core skills</h4>
-            <div class="skills-list" style="margin-top:10px">
-              <div class="pill">UX Research</div>
-              <div class="pill">UI Design</div>
-              <div class="pill">React / TypeScript</div>
-              <div class="pill">Tailwind / CSS</div>
-              <div class="pill">SQL / Python</div>
-              <div class="pill">Analytics & Dashboarding</div>
-            </div>
-          </div>
-
-          <div class="card" style="margin-top:12px">
-            <h4 style="margin-top:0">What I care about</h4>
-            <ul class="small" style="margin:6px 0 0; padding-left:18px">
-              <li>Accessibility (WCAG)</li>
-              <li>Performance & SEO</li>
-              <li>Ethical AI & bias testing</li>
-            </ul>
-          </div>
-        </aside>
+      <div class="card">
+        <h3>Prototype Design System</h3>
+        <p>Reusable UI components for streamlined design.</p>
       </div>
-    </section>
-
-    <section id="projects" class="container" aria-labelledby="projects-heading">
-      <h2 id="projects-heading">Selected projects</h2>
-      <p class="muted">Case studies across AI, design systems, marketing tooling and analytics.</p>
-
-      <div class="projects-grid" style="margin-top:18px">
-        <!-- Project 1 -->
-        <article class="project" tabindex="0" data-project='{"title":"AI-Powered Chatbot","summary":"Conversational assistant for customer support: retrieval-augmented responses, persona flows and analytics.","impact":["30% reduction in first-response time","CSAT +12 points","Automated FAQ + ticket deflection"],"stack":["React","TypeScript","Node","Vector Search"],"case":"Designed persona-aligned flows, prototyped in Figma, implemented accessible chat UI and analytics."}'>
-          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#081229"/><g transform="translate(300,180)"><circle r="120" fill="none" stroke="#7c3aed" stroke-width="6"/><circle r="6" cx="-40" fill="#7c3aed"/><circle r="6" cx="40" fill="#7c3aed"/><path d="M -60 40 Q 0 90 60 40" fill="none" stroke="#06b6d4" stroke-width="6" stroke-linecap="round"/></g><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">AI Chatbot</text></svg>
-          <div class="project-body">
-            <strong>AI-Powered Chatbot</strong>
-            <div class="badges"><span class="badge">AI</span><span class="badge">UX</span><span class="badge">Frontend</span></div>
-            <div style="margin-top:8px;color:var(--muted);font-size:13px">Retrieval augmented chat, analytics & performance focused.</div>
-          </div>
-        </article>
-
-        <!-- Project 2 -->
-        <article class="project" tabindex="0" data-project='{"title":"Prototype Design System","summary":"Token-driven design system with responsive primitives and accessibility baked in.","impact":["Ship velocity +40%","UI inconsistency -60%"],"stack":["Figma","React","Tailwind","Storybook"],"case":"Defined tokens, built components, and automated visual regression testing."}'>
-          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#08202b"/><rect x="60" y="60" width="160" height="80" stroke="#7c3aed" fill="none" stroke-width="6"/><rect x="240" y="60" width="160" height="80" stroke="#06b6d4" fill="none" stroke-width="6"/><rect x="420" y="60" width="120" height="80" stroke="#8b5cf6" fill="none" stroke-width="6"/><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">Design System</text></svg>
-          <div class="project-body">
-            <strong>Prototype Design System</strong>
-            <div class="badges"><span class="badge">Design</span><span class="badge">System</span></div>
-            <div style="margin-top:8px;color:var(--muted);font-size:13px">Tokens, components and docs for scale.</div>
-          </div>
-        </article>
-
-        <!-- Project 3 -->
-        <article class="project" tabindex="0" data-project='{"title":"Custom Content Generator","summary":"Generative tooling for campaign copy with brand-safe controls and templates.","impact":["Copy production time -70%","CTR +18%"],"stack":["Next.js","OpenAI API","TypeScript"],"case":"Built prompt library, guardrails and editorial workflow with A/B testing hooks."}'>
-          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#041226"/><path d="M80 120h440v40H80zM80 180h280v40H80zM80 240h360v40H80z" fill="#7c3aed"/><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">Content Gen</text></svg>
-          <div class="project-body">
-            <strong>Custom Content Generator</strong>
-            <div class="badges"><span class="badge">AI</span><span class="badge">Marketing</span></div>
-            <div style="margin-top:8px;color:var(--muted);font-size:13px">Brand-safe generative copy + workflow integration.</div>
-          </div>
-        </article>
-
-        <!-- Project 4 -->
-        <article class="project" tabindex="0" data-project='{"title":"Bias Audit Report System","summary":"Framework to detect and report bias across datasets and model outputs.","impact":["Compliance readiness","Reduced disparity metrics"],"stack":["Python","Pandas","Evidently"],"case":"Defined fairness metrics, automated drift reports, and executive narratives."}'>
-          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#041225"/><g transform="translate(80,260)"><rect width="60" height="-120" x="0" fill="#06b6d4"/><rect width="60" height="-80" x="80" fill="#7c3aed"/><rect width="60" height="-160" x="160" fill="#06b6d4"/><rect width="60" height="-100" x="240" fill="#7c3aed"/></g><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">Bias Audit</text></svg>
-          <div class="project-body">
-            <strong>Bias Audit Report System</strong>
-            <div class="badges"><span class="badge">AI</span><span class="badge">Data</span></div>
-            <div style="margin-top:8px;color:var(--muted);font-size:13px">Automated fairness & drift reporting for models & datasets.</div>
-          </div>
-        </article>
-
-        <!-- Project 5 -->
-        <article class="project" tabindex="0" data-project='{"title":"Marketing Attribution Dashboard","summary":"Cross-channel performance dashboard with MMM and last-touch comparisons.","impact":["+22% ROAS","Budget reallocation insights"],"stack":["SQL","dbt","Metabase"],"case":"Unified sources, applied MMM and surfaced levers for investment."}'>
-          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#071226"/><polyline points="60,280 180,200 300,240 420,120 540,160" stroke="#7c3aed" stroke-width="8" fill="none"/><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">Attribution</text></svg>
-          <div class="project-body">
-            <strong>Marketing Attribution Dashboard</strong>
-            <div class="badges"><span class="badge">Analytics</span></div>
-            <div style="margin-top:8px;color:var(--muted);font-size:13px">ROAS analysis & channel optimization.</div>
-          </div>
-        </article>
-
-        <!-- Project 6 -->
-        <article class="project" tabindex="0" data-project='{"title":"Responsive E-commerce Frontend","summary":"High-performance storefront with accessibility and micro-animations.","impact":["LCP < 2s","Checkout completion +9%"],"stack":["React","Vite","Tailwind"],"case":"Optimized images, minimized JS and implemented keyboard-first interactions."}'>
-          <svg width="100%" height="160" viewBox="0 0 600 360" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="360" fill="#041227"/><rect x="60" y="80" width="480" height="200" stroke="#06b6d4" fill="none" stroke-width="6"/><circle cx="160" cy="180" r="40" fill="#7c3aed"/><text x="300" y="330" text-anchor="middle" font-size="20" fill="#9fb4d6">E-commerce</text></svg>
-          <div class="project-body">
-            <strong>Responsive E-commerce Frontend</strong>
-            <div class="badges"><span class="badge">Front-end</span><span class="badge">UX</span></div>
-            <div style="margin-top:8px;color:var(--muted);font-size:13px">Fast, accessible shopping experience.</div>
-          </div>
-        </article>
+      <div class="card">
+        <h3>Custom Content Generator</h3>
+        <p>Automates tailored digital content creation.</p>
       </div>
-    </section>
-
-    <section id="contact" class="container" aria-labelledby="contact-heading">
-      <h2 id="contact-heading">Let’s work together</h2>
-      <p class="muted">Have a project or opportunity? Send me a message or connect on LinkedIn / GitHub.</p>
-
-      <div class="contact-grid" style="margin-top:18px">
-        <div class="card">
-          <form id="contactForm" action="#" method="POST" novalidate>
-            <div>
-              <label for="name">Name</label>
-              <input id="name" name="name" required placeholder="Your full name" />
-            </div>
-            <div style="margin-top:12px">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" required placeholder="you@example.com" />
-            </div>
-            <div style="margin-top:12px">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="6" required placeholder="Tell me about your project"></textarea>
-            </div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px">
-              <button type="submit" class="btn">Send message</button>
-              <div class="small muted">I typically respond within 2 business days.</div>
-            </div>
-          </form>
-        </div>
-
-        <aside class="card">
-          <h4 style="margin-top:0">Contact</h4>
-          <div style="margin-top:8px">
-            <div class="small">Email</div>
-            <div style="font-weight:600; margin-bottom:8px"><a href="mailto:hello@example.com">hello@example.com</a></div>
-            <div class="small">Phone</div>
-            <div style="margin-bottom:8px">+27 00 000 0000</div>
-
-            <div style="margin-top:12px">
-              <h5 style="margin:0 0 8px">Social</h5>
-              <div style="display:flex; gap:8px">
-                <a class="ghost" href="#" aria-label="LinkedIn">LinkedIn</a>
-                <a class="ghost" href="#" aria-label="GitHub">GitHub</a>
-                <a class="ghost" href="#" aria-label="Twitter">Twitter</a>
-              </div>
-            </div>
-
-            <div style="margin-top:12px">
-              <h5 style="margin:0 0 8px">Quick facts</h5>
-              <ul class="small" style="padding-left:18px; margin:0; color:var(--muted)">
-                <li>Time zone: Africa/Johannesburg (SAST)</li>
-                <li>Open to: Full-time or contract</li>
-                <li>Focus: AI-assisted product, data-informed UX</li>
-              </ul>
-            </div>
-          </div>
-        </aside>
+      <div class="card">
+        <h3>Bias Audit Report System</h3>
+        <p>Analyzes and reports potential algorithmic bias.</p>
       </div>
-    </section>
-  </main>
-  
-
-  <footer>
-    <div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
-        <div>© <span id="year"></span> Ntombikayise Ncamiso</div>
-        <div style="color:var(--muted)">Built with attention to accessibility, performance & design systems.</div>
+      <div class="card">
+        <h3>Marketing Attribution Dashboard</h3>
+        <p>Interactive data dashboard for campaign tracking.</p>
+      </div>
+      <div class="card">
+        <h3>E-commerce Frontend</h3>
+        <p>Responsive web app with optimized UX flows.</p>
       </div>
     </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <form action="#" method="POST">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn">Send</button>
+    </form>
+    <div class="socials">
+      <a href="#">LinkedIn</a> |
+      <a href="#">GitHub</a> |
+      <a href="#">Twitter</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Ntombikayise Ncamiso. All rights reserved.</p>
   </footer>
 
-  <!-- Modal template (hidden) -->
-  <template id="modal-template">
-    <div class="modal-backdrop" role="dialog" aria-modal="true">
-      <div class="modal" role="document">
-        <button id="closeModa
-
+  <script src="script.js"></script>
+</body>
+</html>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: #f9f9f9;
+}
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2rem; background: #222; color: #fff;
+}
+header nav a {
+  color: #fff; margin-left: 1rem; text-decoration: none;
+}
+#hero {
+  text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg,#0077b6,#00b4d8);
+  color: white;
+}
+.btn {
+  display: inline-block; padding: 0.7rem 1.2rem; background: #222; color: #fff;
+  text-decoration: none; margin-top: 1rem; border-radius: 4px;
+}
+section { padding: 3rem 2rem; max-width: 1000px; margin: auto; }
+#projects .grid {
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 1.5rem;
+}
+.card {
+  background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+form input, form textarea {
+  width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px;
+}
+form button { cursor: pointer; }
+footer {
+  text-align: center; padding: 1rem; background: #222; color: white;
+}
+// Small interaction example
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Portfolio Loaded for Ntombikayise Ncamiso");
+});
