@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ntombikayise Ncamiso | Digital Professional</title>
+    <title>Ntombikayise | Digital Professional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-light: #818cf8;
-            --secondary: #10b981;
-            --dark: #1f2937;
-            --darker: #111827;
-            --light: #f3f4f6;
-            --gray: #9ca3af;
+            --dark-bg: #1a1d21;
+            --card-bg: #24272b;
+            --accent: #8a8d93;
+            --text-primary: #f0f0f0;
+            --text-secondary: #c2c2c2;
+            --border-color: #3a3d41;
+            --primary: #7c83a7;
             --transition: all 0.3s ease;
         }
         
@@ -25,9 +24,9 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--darker);
-            color: var(--light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -41,13 +40,13 @@
         
         /* Header & Navigation */
         header {
-            background-color: rgba(17, 24, 39, 0.95);
+            background-color: var(--dark-bg);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             padding: 20px 0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--border-color);
         }
         
         nav {
@@ -59,7 +58,7 @@
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--light);
+            color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -79,7 +78,7 @@
         }
         
         .nav-links a {
-            color: var(--light);
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
@@ -109,7 +108,7 @@
             display: none;
             background: none;
             border: none;
-            color: var(--light);
+            color: var(--text-primary);
             font-size: 1.5rem;
             cursor: pointer;
         }
@@ -117,7 +116,7 @@
         /* Hero Section */
         .hero {
             padding: 160px 0 100px;
-            background: linear-gradient(to bottom right, var(--darker), var(--dark));
+            background: linear-gradient(to bottom, var(--dark-bg), #22252a);
             position: relative;
             overflow: hidden;
         }
@@ -137,10 +136,11 @@
             flex: 1;
             display: flex;
             justify-content: center;
+            position: relative;
         }
         
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             margin-bottom: 20px;
             line-height: 1.2;
         }
@@ -152,7 +152,7 @@
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 30px;
-            color: var(--gray);
+            color: var(--text-secondary);
             max-width: 600px;
         }
         
@@ -162,7 +162,7 @@
             background-color: var(--primary);
             color: white;
             text-decoration: none;
-            border-radius: 30px;
+            border-radius: 4px;
             font-weight: 600;
             transition: var(--transition);
             border: none;
@@ -170,14 +170,14 @@
         }
         
         .btn:hover {
-            background-color: var(--primary-light);
+            background-color: #6b7294;
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px -10px var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .btn-outline {
             background-color: transparent;
-            border: 2px solid var(--primary);
+            border: 1px solid var(--primary);
             margin-left: 15px;
         }
         
@@ -186,38 +186,30 @@
         }
         
         .graphic-element {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            width: 320px;
+            height: 320px;
+            background: linear-gradient(45deg, var(--primary), #5c627c);
             border-radius: 50%;
             position: relative;
             animation: float 6s ease-in-out infinite;
-        }
-        
-        .graphic-element::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            animation: pulse 3s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 20px;
         }
         
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
+            50% { transform: translateY(-15px); }
         }
         
         /* About Section */
         .about {
             padding: 100px 0;
-            background-color: var(--dark);
+            background-color: var(--dark-bg);
         }
         
         .section-title {
@@ -236,7 +228,7 @@
             content: '';
             position: absolute;
             width: 70px;
-            height: 3px;
+            height: 2px;
             background-color: var(--primary);
             bottom: -10px;
             left: 50%;
@@ -256,11 +248,12 @@
         .about-text h3 {
             font-size: 1.8rem;
             margin-bottom: 20px;
+            color: var(--primary);
         }
         
         .about-text p {
             margin-bottom: 20px;
-            color: var(--gray);
+            color: var(--text-secondary);
         }
         
         .skills {
@@ -271,10 +264,11 @@
         }
         
         .skill-category {
-            background-color: rgba(31, 41, 55, 0.8);
+            background-color: var(--card-bg);
             padding: 25px;
-            border-radius: 10px;
+            border-radius: 8px;
             transition: var(--transition);
+            border: 1px solid var(--border-color);
         }
         
         .skill-category:hover {
@@ -296,6 +290,7 @@
             margin-bottom: 8px;
             display: flex;
             align-items: center;
+            color: var(--text-secondary);
         }
         
         .skill-category li::before {
@@ -304,10 +299,90 @@
             margin-right: 10px;
         }
         
+        /* Experience Section */
+        .experience {
+            padding: 80px 0;
+            background-color: #22252a;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .timeline-title {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+        
         /* Portfolio Section */
         .portfolio {
             padding: 100px 0;
-            background-color: var(--darker);
+            background-color: var(--dark-bg);
         }
         
         .projects-grid {
@@ -317,21 +392,22 @@
         }
         
         .project-card {
-            background-color: var(--dark);
-            border-radius: 10px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
             overflow: hidden;
             transition: var(--transition);
             position: relative;
+            border: 1px solid var(--border-color);
         }
         
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 25px -15px rgba(0, 0, 0, 0.3);
         }
         
         .project-img {
             height: 200px;
-            background: linear-gradient(45deg, #6366f1, #10b981);
+            background: linear-gradient(45deg, #5c627c, #7c83a7);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -349,7 +425,7 @@
         }
         
         .project-info p {
-            color: var(--gray);
+            color: var(--text-secondary);
             margin-bottom: 15px;
             font-size: 0.9rem;
         }
@@ -362,10 +438,10 @@
         }
         
         .project-tag {
-            background-color: rgba(99, 102, 241, 0.2);
-            color: var(--primary-light);
+            background-color: rgba(124, 131, 167, 0.2);
+            color: var(--primary);
             padding: 4px 10px;
-            border-radius: 20px;
+            border-radius: 4px;
             font-size: 0.8rem;
         }
         
@@ -388,13 +464,13 @@
         }
         
         .project-link:hover {
-            color: var(--primary-light);
+            color: var(--text-primary);
         }
         
         /* Contact Section */
         .contact {
             padding: 100px 0;
-            background-color: var(--dark);
+            background-color: #22252a;
         }
         
         .contact-container {
@@ -409,10 +485,11 @@
         .contact-info h3 {
             font-size: 1.8rem;
             margin-bottom: 20px;
+            color: var(--primary);
         }
         
         .contact-info p {
-            color: var(--gray);
+            color: var(--text-secondary);
             margin-bottom: 30px;
         }
         
@@ -424,12 +501,13 @@
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+            color: var(--text-secondary);
         }
         
         .contact-details i {
             width: 40px;
             height: 40px;
-            background-color: rgba(99, 102, 241, 0.2);
+            background-color: rgba(124, 131, 167, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -447,14 +525,15 @@
         .social-link {
             width: 45px;
             height: 45px;
-            background-color: var(--darker);
+            background-color: var(--dark-bg);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--light);
+            color: var(--text-primary);
             text-decoration: none;
             transition: var(--transition);
+            border: 1px solid var(--border-color);
         }
         
         .social-link:hover {
@@ -464,9 +543,10 @@
         
         .contact-form {
             flex: 1;
-            background-color: rgba(31, 41, 55, 0.8);
+            background-color: var(--card-bg);
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
         
         .form-group {
@@ -482,11 +562,11 @@
         .form-control {
             width: 100%;
             padding: 12px 15px;
-            background-color: var(--darker);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            color: var(--light);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         .form-control:focus {
@@ -501,14 +581,14 @@
         
         /* Footer */
         footer {
-            background-color: var(--darker);
+            background-color: var(--dark-bg);
             padding: 40px 0;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--border-color);
         }
         
         footer p {
-            color: var(--gray);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
         
@@ -531,6 +611,24 @@
             .contact-container {
                 flex-direction: column;
             }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 22px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -543,7 +641,7 @@
             }
             
             .hero h1 {
-                font-size: 2.8rem;
+                font-size: 2.5rem;
             }
             
             .skills {
@@ -558,7 +656,7 @@
         
         @media (max-width: 576px) {
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
             
             .graphic-element {
@@ -577,10 +675,11 @@
     <header>
         <div class="container">
             <nav>
-                <a href="#" class="logo">N<span class="logo-accent">N</span></a>
+                <a href="#" class="logo">N<span class="logo-accent">K</span></a>
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
                     <li><a href="#portfolio">Portfolio</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -596,15 +695,17 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Hi, I'm <span>Ntombikayise Ncamiso</span></h1>
-                    <p>A digital professional specializing in UX/UI design, front-end development, digital marketing, and data analytics. I create innovative digital experiences that drive results.</p>
+                    <h1>Hi, I'm <span>Ntombikayise</span></h1>
+                    <p>A digital professional specializing in UX/UI design, front-end development, and data analytics. I create innovative digital experiences that drive results.</p>
                     <div class="hero-buttons">
                         <a href="#portfolio" class="btn">View My Work</a>
                         <a href="#contact" class="btn btn-outline">Get In Touch</a>
                     </div>
                 </div>
                 <div class="hero-graphic">
-                    <div class="graphic-element"></div>
+                    <div class="graphic-element">
+                        Innovative Digital Solutions
+                    </div>
                 </div>
             </div>
         </div>
@@ -619,9 +720,9 @@
             <div class="about-content">
                 <div class="about-text">
                     <h3>Digital Professional with Versatile Expertise</h3>
-                    <p>With over 5 years of experience in the digital space, I bring a unique combination of technical expertise and creative vision to every project. My background spans multiple disciplines, allowing me to approach problems from different perspectives and deliver comprehensive solutions.</p>
-                    <p>I'm passionate about creating user-centered designs, writing clean and efficient code, developing data-driven marketing strategies, and transforming complex data into actionable insights.</p>
+                    <p>I am a dedicated digital junior with advanced skills in UX/UI design, front-end development, and data analytics. My passion lies in creating user-centered designs, writing clean and efficient code, and transforming complex data into actionable insights.</p>
                     <p>My approach combines analytical thinking with creative problem-solving to deliver digital experiences that are not only visually appealing but also highly functional and effective.</p>
+                    <p>I'm constantly learning and adapting to new technologies and methodologies to stay at the forefront of the digital landscape.</p>
                 </div>
                 <div class="skills">
                     <div class="skill-category">
@@ -643,22 +744,49 @@
                         </ul>
                     </div>
                     <div class="skill-category">
-                        <h4>Digital Marketing</h4>
+                        <h4>Data Analytics</h4>
                         <ul>
-                            <li>SEO/SEM</li>
-                            <li>Content Strategy</li>
-                            <li>Social Media Marketing</li>
-                            <li>Conversion Optimization</li>
+                            <li>Data Visualization</li>
+                            <li>Statistical Analysis</li>
+                            <li>SQL & Database Management</li>
+                            <li>Google Analytics</li>
                         </ul>
                     </div>
                     <div class="skill-category">
-                        <h4>Data Analytics</h4>
+                        <h4>Tools & Technologies</h4>
                         <ul>
-                            <li>Google Analytics</li>
-                            <li>Data Visualization</li>
-                            <li>A/B Testing</li>
-                            <li>Statistical Analysis</li>
+                            <li>Figma & Adobe XD</li>
+                            <li>Git & GitHub</li>
+                            <li>Python & R</li>
+                            <li>Tableau & Power BI</li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Experience</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">July 2023 - Present</div>
+                        <h3 class="timeline-title">Digital Junior</h3>
+                        <p class="timeline-desc">Capaciti</p>
+                        <p class="timeline-desc">Developing advanced skills in digital technologies including UX/UI design, front-end development, and data analytics through intensive training and practical projects.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022 - 2023</div>
+                        <h3 class="timeline-title">Data Quality Officer</h3>
+                        <p class="timeline-desc">Anova Health Institute</p>
+                        <p class="timeline-desc">Monitored and ensured the quality of health data, developed data validation processes, and created reports for data-driven decision making. Acquired strong data analytics skills during this role.</p>
                     </div>
                 </div>
             </div>
@@ -674,86 +802,17 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-img">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <div class="project-info">
-                        <h3>E-commerce Redesign</h3>
-                        <p>Complete UX/UI redesign for fashion e-store resulting in 35% increase in conversions.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">UX/UI</span>
-                            <span class="project-tag">Web Design</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="#" class="project-link"><i class="fas fa-code"></i> Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="project-info">
-                        <h3>Marketing Analytics Dashboard</h3>
-                        <p>Interactive dashboard for tracking and visualizing marketing campaign performance.</p>
+                        <h3>Health Data Dashboard</h3>
+                        <p>Interactive dashboard for visualizing and analyzing health data metrics with filtering capabilities.</p>
                         <div class="project-tags">
                             <span class="project-tag">Data Analytics</span>
-                            <span class="project-tag">Visualization</span>
+                            <span class="project-tag">Tableau</span>
                         </div>
                         <div class="project-links">
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="#" class="project-link"><i class="fas fa-code"></i> Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <div class="project-info">
-                        <h3>Fitness Mobile App</h3>
-                        <p>Cross-platform mobile application for personalized workout and nutrition planning.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">UI Design</span>
-                            <span class="project-tag">React Native</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="#" class="project-link"><i class="fas fa-code"></i> Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="project-info">
-                        <h3>SEO Strategy</h3>
-                        <p>Comprehensive SEO strategy for SaaS company resulting in 200% organic traffic growth.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Digital Marketing</span>
-                            <span class="project-tag">SEO</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Case Study</a>
-                            <a href="#" class="project-link"><i class="fas fa-code"></i> Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <i class="fas fa-paint-brush"></i>
-                    </div>
-                    <div class="project-info">
-                        <h3>Design System</h3>
-                        <p>Comprehensive design system for fintech startup ensuring consistency across platforms.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Design Systems</span>
-                            <span class="project-tag">UI</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View System</a>
-                            <a href="#" class="project-link"><i class="fas fa-code"></i> Details</a>
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
                         </div>
                     </div>
                 </div>
@@ -762,15 +821,30 @@
                         <i class="fas fa-laptop-code"></i>
                     </div>
                     <div class="project-info">
-                        <h3>Web Application</h3>
-                        <p>Responsive web application for project management with real-time collaboration features.</p>
+                        <h3>E-commerce Website</h3>
+                        <p>Responsive e-commerce platform with intuitive UI and seamless shopping experience.</p>
                         <div class="project-tags">
                             <span class="project-tag">Front-end</span>
-                            <span class="project-tag">Vue.js</span>
+                            <span class="project-tag">UX/UI</span>
                         </div>
                         <div class="project-links">
-                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="#" class="project-link"><i class="fas fa-code"></i> Details</a>
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>Fitness App UI</h3>
+                        <p>Mobile application design for fitness tracking with personalized workout plans.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">UI Design</span>
+                            <span class="project-tag">Figma</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View Project</a>
                         </div>
                     </div>
                 </div>
@@ -791,15 +865,15 @@
                     <ul class="contact-details">
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span>ntombi@example.com</span>
+                            <span>entlencamiso14@gmail.com</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
-                            <span>+27 123 456 789</span>
+                            <span>074 347 9569</span>
                         </li>
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>Johannesburg, South Africa</span>
+                            <span>38739 Khuthaza Street</span>
                         </li>
                     </ul>
                     <div class="social-links">
@@ -837,7 +911,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2023 Ntombikayise Ncamiso. All rights reserved.</p>
+            <p>&copy; 2023 Ntombikayise. All rights reserved.</p>
         </div>
     </footer>
 
