@@ -4,27 +4,128 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ntombikayise Ncamiso | Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: #f9f9f9;
+      transition: background 0.3s, color 0.3s;
+    }
+    a { text-decoration: none; }
+
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem; background: #222; color: #fff;
+      position: sticky; top: 0; z-index: 1000;
+    }
+    header nav a { color: #fff; margin-left: 1rem; transition: color 0.3s; }
+    header nav a:hover { color: #00b4d8; }
+
+    #hero {
+      text-align: center; padding: 4rem 2rem;
+      background: linear-gradient(135deg,#0077b6,#00b4d8);
+      color: white;
+    }
+    #hero h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .btn {
+      display: inline-block; padding: 0.7rem 1.2rem;
+      background: #222; color: #fff;
+      margin: 0.5rem; border-radius: 4px; transition: background 0.3s;
+    }
+    .btn:hover { background: #00b4d8; }
+
+    section {
+      padding: 3rem 2rem; max-width: 1000px; margin: auto;
+      opacity: 0; transform: translateY(30px); transition: all 0.8s ease;
+    }
+    section.visible { opacity: 1; transform: translateY(0); }
+    section h2 { margin-bottom: 1rem; font-size: 2rem; color: #0077b6; }
+
+    #projects .grid {
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: white; border-radius: 8px; overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer; display: flex; flex-direction: column;
+    }
+    .card img { width: 100%; height: 150px; object-fit: cover; }
+    .card div { padding: 1rem; }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+    }
+
+    .modal {
+      display: none; position: fixed; z-index: 2000;
+      left: 0; top: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); justify-content: center; align-items: center;
+    }
+    .modal-content {
+      background: #fff; padding: 2rem; border-radius: 8px;
+      max-width: 700px; width: 90%; position: relative;
+      animation: fadeIn 0.3s ease; text-align: center;
+    }
+    .modal-content img {
+      max-width: 100%; border-radius: 6px; margin-bottom: 1rem;
+    }
+    .close {
+      position: absolute; top: 10px; right: 15px;
+      font-size: 1.5rem; cursor: pointer; color: #333;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    form input, form textarea {
+      width: 100%; padding: 0.8rem; margin-bottom: 1rem;
+      border: 1px solid #ccc; border-radius: 4px;
+    }
+    form button { cursor: pointer; }
+    .socials a { margin-right: 1rem; color: #0077b6; }
+
+    footer {
+      text-align: center; padding: 1rem; background: #222; color: white;
+      margin-top: 2rem;
+    }
+
+    body.dark { background: #121212; color: #ddd; }
+    body.dark header { background: #000; }
+    body.dark #hero { background: linear-gradient(135deg,#333,#111); }
+    body.dark .card { background: #1e1e1e; color: #ddd; }
+    body.dark .modal-content { background: #1e1e1e; color: #ddd; }
+    body.dark .btn { background: #0077b6; }
+    body.dark footer { background: #000; }
+
+    .toggle-btn {
+      background: #00b4d8; border: none; padding: 0.5rem 1rem;
+      color: #fff; border-radius: 4px; cursor: pointer; margin-left: 1rem;
+    }
+  </style>
 </head>
 <body>
-  <!-- HEADER -->
   <header>
     <h1>Ntombikayise Ncamiso</h1>
     <nav>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
+      <button class="toggle-btn">🌙 Dark</button>
     </nav>
   </header>
 
-  <!-- HERO -->
-  <section id="hero">
+  <section id="hero" class="visible">
     <h2>Digital Professional</h2>
     <p>UX/UI · Front-End · Marketing · Data Analytics</p>
     <a href="#projects" class="btn">View My Work</a>
+    <a href="cv.pdf" class="btn" download>Download CV</a>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <h2>About Me</h2>
     <p>
@@ -35,38 +136,36 @@
     </p>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <h2>Projects</h2>
     <div class="grid">
-      <div class="card">
-        <h3>AI-Powered Chatbot</h3>
-        <p>Conversational AI tool for customer engagement.</p>
+      <div class="card" data-project="chatbot">
+        <img src="https://via.placeholder.com/400x200?text=Chatbot" alt="Chatbot">
+        <div><h3>AI-Powered Chatbot</h3><p>Conversational AI tool for customer engagement.</p></div>
       </div>
-      <div class="card">
-        <h3>Prototype Design System</h3>
-        <p>Reusable UI components for streamlined design.</p>
+      <div class="card" data-project="design">
+        <img src="https://via.placeholder.com/400x200?text=Design+System" alt="Design System">
+        <div><h3>Prototype Design System</h3><p>Reusable UI components for streamlined design.</p></div>
       </div>
-      <div class="card">
-        <h3>Custom Content Generator</h3>
-        <p>Automates tailored digital content creation.</p>
+      <div class="card" data-project="generator">
+        <img src="https://via.placeholder.com/400x200?text=Content+Generator" alt="Content Generator">
+        <div><h3>Custom Content Generator</h3><p>Automates tailored digital content creation.</p></div>
       </div>
-      <div class="card">
-        <h3>Bias Audit Report System</h3>
-        <p>Analyzes and reports potential algorithmic bias.</p>
+      <div class="card" data-project="bias">
+        <img src="https://via.placeholder.com/400x200?text=Bias+Audit" alt="Bias Audit">
+        <div><h3>Bias Audit Report System</h3><p>Analyzes and reports potential algorithmic bias.</p></div>
       </div>
-      <div class="card">
-        <h3>Marketing Attribution Dashboard</h3>
-        <p>Interactive data dashboard for campaign tracking.</p>
+      <div class="card" data-project="dashboard">
+        <img src="https://via.placeholder.com/400x200?text=Dashboard" alt="Dashboard">
+        <div><h3>Marketing Attribution Dashboard</h3><p>Interactive data dashboard for campaign tracking.</p></div>
       </div>
-      <div class="card">
-        <h3>E-commerce Frontend</h3>
-        <p>Responsive web app with optimized UX flows.</p>
+      <div class="card" data-project="ecommerce">
+        <img src="https://via.placeholder.com/400x200?text=E-commerce" alt="E-commerce">
+        <div><h3>E-commerce Frontend</h3><p>Responsive web app with optimized UX flows.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <h2>Contact</h2>
     <form action="#" method="POST">
@@ -76,8 +175,8 @@
       <button type="submit" class="btn">Send</button>
     </form>
     <div class="socials">
-      <a href="#">LinkedIn</a> |
-      <a href="#">GitHub</a> |
+      <a href="#">LinkedIn</a>
+      <a href="#">GitHub</a>
       <a href="#">Twitter</a>
     </div>
   </section>
@@ -86,47 +185,86 @@
     <p>© 2025 Ntombikayise Ncamiso. All rights reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img id="modal-img" src="" alt="">
+      <h3 id="modal-title"></h3>
+      <p id="modal-desc"></p>
+    </div>
+  </div>
+
+  <script>
+    const sections = document.querySelectorAll("section");
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      sections.forEach(sec => {
+        const boxTop = sec.getBoundingClientRect().top;
+        if (boxTop < triggerBottom) sec.classList.add("visible");
+      });
+    };
+    window.addEventListener("scroll", revealOnScroll);
+
+    const toggleBtn = document.querySelector(".toggle-btn");
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      toggleBtn.textContent = document.body.classList.contains("dark") ? "☀️ Light" : "🌙 Dark";
+    });
+
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalDesc = document.getElementById("modal-desc");
+    const modalImg = document.getElementById("modal-img");
+    const closeBtn = document.querySelector(".close");
+
+    const projectData = {
+      chatbot: {
+        title: "AI-Powered Chatbot",
+        desc: "An intelligent chatbot built with AI/NLP to automate customer support and engagement.",
+        img: "https://via.placeholder.com/600x300?text=Chatbot+Preview"
+      },
+      design: {
+        title: "Prototype Design System",
+        desc: "A scalable design system with reusable components and color guidelines.",
+        img: "https://via.placeholder.com/600x300?text=Design+System+Preview"
+      },
+      generator: {
+        title: "Custom Content Generator",
+        desc: "Tool for auto-generating tailored blog posts, captions, and marketing copy.",
+        img: "https://via.placeholder.com/600x300?text=Content+Generator+Preview"
+      },
+      bias: {
+        title: "Bias Audit Report System",
+        desc: "Analytics platform that scans ML outputs for potential bias, generating compliance reports.",
+        img: "https://via.placeholder.com/600x300?text=Bias+Audit+Preview"
+      },
+      dashboard: {
+        title: "Marketing Attribution Dashboard",
+        desc: "Data visualization tool tracking campaign performance across channels.",
+        img: "https://via.placeholder.com/600x300?text=Dashboard+Preview"
+      },
+      ecommerce: {
+        title: "E-commerce Frontend",
+        desc: "Modern, responsive e-commerce interface with smooth UX and checkout flows.",
+        img: "https://via.placeholder.com/600x300?text=E-commerce+Preview"
+      }
+    };
+
+    document.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("click", () => {
+        const project = card.dataset.project;
+        modalTitle.textContent = projectData[project].title;
+        modalDesc.textContent = projectData[project].desc;
+        modalImg.src = projectData[project].img;
+        modal.style.display = "flex";
+      });
+    });
+
+    closeBtn.onclick = () => { modal.style.display = "none"; };
+    window.onclick = e => { if (e.target == modal) modal.style.display = "none"; };
+  </script>
 </body>
 </html>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background: #f9f9f9;
-}
-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1rem 2rem; background: #222; color: #fff;
-}
-header nav a {
-  color: #fff; margin-left: 1rem; text-decoration: none;
-}
-#hero {
-  text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg,#0077b6,#00b4d8);
-  color: white;
-}
-.btn {
-  display: inline-block; padding: 0.7rem 1.2rem; background: #222; color: #fff;
-  text-decoration: none; margin-top: 1rem; border-radius: 4px;
-}
-section { padding: 3rem 2rem; max-width: 1000px; margin: auto; }
-#projects .grid {
-  display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-  gap: 1.5rem;
-}
-.card {
-  background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-form input, form textarea {
-  width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px;
-}
-form button { cursor: pointer; }
-footer {
-  text-align: center; padding: 1rem; background: #222; color: white;
-}
-// Small interaction example
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Portfolio Loaded for Ntombikayise Ncamiso");
-});
+
+      
+
